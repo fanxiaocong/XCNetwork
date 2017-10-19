@@ -84,19 +84,19 @@ fprintf(stderr, "-------------------\n");   \
 /**
  *  @brief  通过POST方式请求服务器。
  *
- *  @param actionName           接口名字
- *  @param parameters                参数
+ *  @param url                  接口请求地址
+ *  @param parameters           参数
  *  @param success              成功时候的回调
  *  @param failure              失败时候的回调
  *  @param isRequestSerializer  请求参数是否序列化
  *  @param isResponseSerializer 响应参数是否序列化
  */
-- (void)sendPostRequestToServiceByPostWithAction:(NSString *)actionName
-                                      parameters:(NSDictionary *)parameters
-                                         success:(NetworkSuccess)success
-                                         failure:(NetworkFailure)failure
-                               requestSerializer:(BOOL)isRequestSerializer
-                              responseSerializer:(BOOL)isResponseSerializer
+- (void)sendPostRequestToServiceByPostWithURL:(NSString *)url
+                                   parameters:(NSDictionary *)parameters
+                                      success:(NetworkSuccess)success
+                                      failure:(NetworkFailure)failure
+                            requestSerializer:(BOOL)isRequestSerializer
+                           responseSerializer:(BOOL)isResponseSerializer
 {
     DLog(@"请求开始，请求方式为 *********************** ：POST");
     
@@ -112,11 +112,11 @@ fprintf(stderr, "-------------------\n");   \
         return ;
     }
     
-    DLog(@"请求地址：%@%@", self.serviceURL, actionName);
+    DLog(@"请求地址：%@", url);
     
     DLog(@"请求参数：%@", parameters);
     
-    [self.manager POST:[self.serviceURL stringByAppendingString:actionName] parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    [self.manager POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -136,19 +136,19 @@ fprintf(stderr, "-------------------\n");   \
 /**
  *  @brief  通过GET方式请求服务器。
  *
- *  @param actionName           接口名字
+ *  @param url                  接口请求地址
  *  @param parameters           参数
  *  @param success              成功时候的回调
  *  @param failure              失败时候的回调
  *  @param isRequestSerializer  请求参数是否序列化
  *  @param isResponseSerializer 响应参数是否序列化
  */
-- (void)sendGetRequestToServiceByPostWithAction:(NSString *)actionName
-                                     parameters:(NSDictionary *)parameters
-                                        success:(NetworkSuccess)success
-                                        failure:(NetworkFailure)failure
-                              requestSerializer:(BOOL)isRequestSerializer
-                             responseSerializer:(BOOL)isResponseSerializer
+- (void)sendGetRequestToServiceByPostithURL:(NSString *)url
+                                 parameters:(NSDictionary *)parameters
+                                    success:(NetworkSuccess)success
+                                    failure:(NetworkFailure)failure
+                          requestSerializer:(BOOL)isRequestSerializer
+                         responseSerializer:(BOOL)isResponseSerializer
 {
     DLog(@"请求开始，请求方式为 *********************** ：GET");
     
@@ -163,11 +163,11 @@ fprintf(stderr, "-------------------\n");   \
         return ;
     }
     
-    DLog(@"请求地址：%@%@", self.serviceURL, actionName);
+    DLog(@"请求地址：%@", url);
     
     DLog(@"请求参数：%@", parameters);
     
-    [self.manager GET:[self.serviceURL stringByAppendingString:actionName] parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    [self.manager GET:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -189,7 +189,7 @@ fprintf(stderr, "-------------------\n");   \
 /**
  *  @brief  通过POST方式上传图片
  *
- *  @param actionName           接口名字
+ *  @param url                  接口请求地址
  *  @param parameters           参数
  *  @param images               图片数组
  *  @param progress             上传进度
@@ -198,14 +198,14 @@ fprintf(stderr, "-------------------\n");   \
  *  @param isRequestSerializer  请求参数是否序列化
  *  @param isResponseSerializer 响应参数是否序列化
  */
-- (void)uploadImgaeToServiceByPostWithAction:(NSString *)actionName
-                                  parameters:(NSDictionary *)parameters
-                                      images:(NSArray *)images
-                                    progress:(NetworkUploadProgress)progress
-                                     success:(NetworkSuccess)success
-                                     failure:(NetworkFailure)failure
-                           requestSerializer:(BOOL)isRequestSerializer
-                          responseSerializer:(BOOL)isResponseSerializer
+- (void)uploadImgaeToServiceByPostWithURL:(NSString *)url
+                               parameters:(NSDictionary *)parameters
+                                   images:(NSArray *)images
+                                 progress:(NetworkUploadProgress)progress
+                                  success:(NetworkSuccess)success
+                                  failure:(NetworkFailure)failure
+                        requestSerializer:(BOOL)isRequestSerializer
+                       responseSerializer:(BOOL)isResponseSerializer
 {
     DLog(@"请求开始...上传图片，请求方式为：POST");
     BOOL b = [self configureRequest:isRequestSerializer responseSerializer:isResponseSerializer];
@@ -218,10 +218,10 @@ fprintf(stderr, "-------------------\n");   \
         return;
     }
     
-    DLog(@"请求地址：%@%@", self.serviceURL, actionName);
+    DLog(@"请求地址：%@", url);
     DLog(@"请求参数：%@", parameters);
     
-    [self.manager POST:[self.serviceURL stringByAppendingString:actionName] parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [self.manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         if (images)
         {
             for (NSInteger i = 0 ;i < images.count; i ++)

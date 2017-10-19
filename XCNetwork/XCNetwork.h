@@ -56,10 +56,6 @@ typedef void (^NetworkDownloadProgress)(NSProgress *proress);
 @interface XCNetwork : NSObject
 
 
-/** 👀 服务器的请求总地址 👀 */
-@property (copy, nonatomic) NSString *serviceURL;
-
-
 /**
  *  关于网络请求的一些配置设置：比如请求头的设置、超时时间、是否需要序列化
  *
@@ -72,43 +68,43 @@ typedef void (^NetworkDownloadProgress)(NSProgress *proress);
 /**
  *  @brief  通过POST方式请求服务器。
  *
- *  @param actionName           接口名字
+ *  @param url                  接口请求地址
  *  @param parameters           参数
  *  @param success              成功时候的回调
  *  @param failure              失败时候的回调
  *  @param isRequestSerializer  请求参数是否序列化
  *  @param isResponseSerializer 响应参数是否序列化
  */
-- (void)sendPostRequestToServiceByPostWithAction:(NSString *)actionName
-                                      parameters:(NSDictionary *)parameters
-                                         success:(NetworkSuccess)success
-                                         failure:(NetworkFailure)failure
-                               requestSerializer:(BOOL)isRequestSerializer
-                              responseSerializer:(BOOL)isResponseSerializer;
+- (void)sendPostRequestToServiceByPostWithURL:(NSString *)url
+                                  parameters:(NSDictionary *)parameters
+                                     success:(NetworkSuccess)success
+                                     failure:(NetworkFailure)failure
+                           requestSerializer:(BOOL)isRequestSerializer
+                          responseSerializer:(BOOL)isResponseSerializer;
 
 
 /**
  *  @brief  通过GET方式请求服务器。
  *
- *  @param actionName           接口名字
+ *  @param url                  接口请求地址
  *  @param parameters           参数
  *  @param success              成功时候的回调
  *  @param failure              失败时候的回调
  *  @param isRequestSerializer  请求参数是否序列化
  *  @param isResponseSerializer 响应参数是否序列化
  */
-- (void)sendGetRequestToServiceByPostWithAction:(NSString *)actionName
-                                     parameters:(NSDictionary *)parameters
-                                        success:(NetworkSuccess)success
-                                        failure:(NetworkFailure)failure
-                              requestSerializer:(BOOL)isRequestSerializer
-                             responseSerializer:(BOOL)isResponseSerializer;
+- (void)sendGetRequestToServiceByPostithURL:(NSString *)url
+                                 parameters:(NSDictionary *)parameters
+                                    success:(NetworkSuccess)success
+                                    failure:(NetworkFailure)failure
+                          requestSerializer:(BOOL)isRequestSerializer
+                         responseSerializer:(BOOL)isResponseSerializer;
 
 
 /**
  *  @brief  通过POST方式上传图片
  *
- *  @param actionName           接口名字
+ *  @param url                  接口请求地址
  *  @param parameters           参数
  *  @param images               图片数组
  *  @param progress             上传进度
@@ -117,14 +113,14 @@ typedef void (^NetworkDownloadProgress)(NSProgress *proress);
  *  @param isRequestSerializer  请求参数是否序列化
  *  @param isResponseSerializer 响应参数是否序列化
  */
-- (void)uploadImgaeToServiceByPostWithAction:(NSString *)actionName
-                                  parameters:(NSDictionary *)parameters
-                                      images:(NSArray *)images
-                                    progress:(NetworkUploadProgress)progress
-                                     success:(NetworkSuccess)success
-                                     failure:(NetworkFailure)failure
-                           requestSerializer:(BOOL)isRequestSerializer
-                          responseSerializer:(BOOL)isResponseSerializer;
+- (void)uploadImgaeToServiceByPostWithURL:(NSString *)url
+                              parameters:(NSDictionary *)parameters
+                                  images:(NSArray *)images
+                                 progress:(NetworkUploadProgress)progress
+                                  success:(NetworkSuccess)success
+                                  failure:(NetworkFailure)failure
+                        requestSerializer:(BOOL)isRequestSerializer
+                       responseSerializer:(BOOL)isResponseSerializer;
 
 
 /**
