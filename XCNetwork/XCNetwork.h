@@ -56,6 +56,10 @@ typedef void (^NetworkDownloadProgress)(NSProgress *proress);
 @interface XCNetwork : NSObject
 
 
+/** 👀 网络请求管理类 👀 */
+@property (strong, nonatomic, readonly) AFHTTPSessionManager *manager;
+
+
 /**
  *  关于网络请求的一些配置设置：比如请求头的设置、超时时间、是否需要序列化
  *

@@ -34,9 +34,6 @@ fprintf(stderr, "-------------------\n");   \
 
 @interface XCNetwork ()
 
-/** 👀 网络请求管理类 👀 */
-@property (strong, nonatomic) AFHTTPSessionManager *manager;
-
 /** 👀 下载管理类 👀 */
 @property (strong, nonatomic) AFURLSessionManager *downloadManager;
 
@@ -47,6 +44,11 @@ fprintf(stderr, "-------------------\n");   \
 
 
 @implementation XCNetwork
+
+- (void)setManager:(AFHTTPSessionManager *)manager
+{
+    _manager = manager;
+}
 
 
 #pragma mark - 🔓 👀 Public Method 👀
