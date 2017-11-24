@@ -111,6 +111,7 @@ typedef void (^NetworkDownloadProgress)(NSProgress *proress);
  *  @param url                  接口请求地址
  *  @param parameters           参数
  *  @param images               图片数组
+ *  @param directoryName        服务器文件夹名称
  *  @param progress             上传进度
  *  @param success              成功时候的回调
  *  @param failure              失败时候的回调
@@ -120,6 +121,33 @@ typedef void (^NetworkDownloadProgress)(NSProgress *proress);
 - (void)uploadImgaeToServiceByPostWithURL:(NSString *)url
                               parameters:(NSDictionary *)parameters
                                   images:(NSArray *)images
+                            directoryName:(NSString *)directoryName
+                                 progress:(NetworkUploadProgress)progress
+                                  success:(NetworkSuccess)success
+                                  failure:(NetworkFailure)failure
+                        requestSerializer:(BOOL)isRequestSerializer
+                       responseSerializer:(BOOL)isResponseSerializer;
+
+
+/**
+ *  @brief  通过POST方式上传图片
+ *
+ *  @param url                  接口请求地址
+ *  @param parameters           参数
+ *  @param images               图片数组
+ *  @param directoryNames       服务器文件夹名称
+ *  @param fileNames            图片文件名称
+ *  @param progress             上传进度
+ *  @param success              成功时候的回调
+ *  @param failure              失败时候的回调
+ *  @param isRequestSerializer  请求参数是否序列化
+ *  @param isResponseSerializer 响应参数是否序列化
+ */
+- (void)uploadImgaeToServiceByPostWithURL:(NSString *)url
+                               parameters:(NSDictionary *)parameters
+                                   images:(NSArray *)images
+                           directoryNames:(NSArray *)directoryNames
+                                fileNames:(NSArray *)fileNames
                                  progress:(NetworkUploadProgress)progress
                                   success:(NetworkSuccess)success
                                   failure:(NetworkFailure)failure

@@ -194,6 +194,7 @@ fprintf(stderr, "-------------------\n");   \
  *  @param url                  接口请求地址
  *  @param parameters           参数
  *  @param images               图片数组
+ *  @param directoryName        服务器文件夹名称
  *  @param progress             上传进度
  *  @param success              成功时候的回调
  *  @param failure              失败时候的回调
@@ -203,6 +204,109 @@ fprintf(stderr, "-------------------\n");   \
 - (void)uploadImgaeToServiceByPostWithURL:(NSString *)url
                                parameters:(NSDictionary *)parameters
                                    images:(NSArray *)images
+                            directoryName:(NSString *)directoryName
+                                 progress:(NetworkUploadProgress)progress
+                                  success:(NetworkSuccess)success
+                                  failure:(NetworkFailure)failure
+                        requestSerializer:(BOOL)isRequestSerializer
+                       responseSerializer:(BOOL)isResponseSerializer
+{
+    DLog(@"请求开始...上传图片，请求方式为：POST");
+    BOOL b = [self configureRequest:isRequestSerializer responseSerializer:isResponseSerializer];
+    if (!b) {
+        
+        DLog(@"请求结束，请求方式为：POST");
+        
+        failure(FAIL_MESSAGE_OF_NETWORK_ERROR);
+        
+        return;
+    }
+    
+    DLog(@"请求地址：%@", url);
+    DLog(@"请求参数：%@", parameters);
+    
+    
+    /// 服务器上存储图片的文件夹的名称
+    NSMutableArray *directoryNames = [NSMutableArray array];
+    /// 图片名称
+    NSMutableArray *fileNames = [NSMutableArray array];
+    if (images)
+    {
+        for (NSInteger i = 0 ;i < images.count; i ++)
+        {
+            // 生成一个唯一的图片名称
+            NSString *imgName = [NSString stringWithFormat:@"%ld",(long)[[NSDate date] timeIntervalSince1970]];
+            
+            DLog(@"fileName:  %@", [NSString stringWithFormat:@"fileName_%@_%ld.png",imgName,(long)i]);
+            
+            [directoryNames addObject:directoryName];
+            [fileNames addObject:imgName];
+        }
+    }
+    
+    [self uploadImgaeToServiceByPostWithURL:url
+                                 parameters:parameters
+                                     images:images
+                             directoryNames:directoryNames
+                                  fileNames:fileNames
+                                   progress:progress
+                                    success:success
+                                    failure:failure
+                          requestSerializer:isRequestSerializer
+                         responseSerializer:isResponseSerializer];
+    
+//    [self.manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//        if (images)
+//        {
+//            for (NSInteger i = 0 ;i < images.count; i ++)
+//            {
+//                // 生成一个唯一的图片名称
+//                NSString *imgName = [NSString stringWithFormat:@"%ld",(long)[[NSDate date] timeIntervalSince1970]];
+//
+//                DLog(@"fileName:  %@", [NSString stringWithFormat:@"fileName_%@_%ld.png",imgName,(long)i]);
+//
+//                NSData *imageData = UIImagePNGRepresentation(images[i]);
+//                [formData appendPartWithFileData:imageData name:directoryName fileName:[NSString stringWithFormat:@"fileName_%@_%ld.png",imgName,(long)i] mimeType:@"image/png"];
+//            }
+//        }
+//    } progress:^(NSProgress * _Nonnull uploadProgress) {
+////        DLog(@"上传进度:%@", uploadProgress);
+//        progress(uploadProgress);
+//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        DLog(@"请求结束，请求方式为：POST");
+//        DLog(@"responseObject:  %@", responseObject);
+//
+//        success(responseObject);
+//
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        DLog(@"请求结果失败 原因:%@", error.localizedDescription);
+//        DLog(@"请求结束，请求方式为：POST");
+//
+//        failure(FAIL_MESSAGE_OF_REQUEST_FAIL);
+//    }];
+//    DLog(@"请求结束 ...上传图片，请求方式为：POST");
+}
+
+
+/**
+ *  @brief  通过POST方式上传图片
+ *
+ *  @param url                  接口请求地址
+ *  @param parameters           参数
+ *  @param images               图片数组
+ *  @param directoryNames       服务器文件夹名称
+ *  @param fileNames            图片文件名称
+ *  @param progress             上传进度
+ *  @param success              成功时候的回调
+ *  @param failure              失败时候的回调
+ *  @param isRequestSerializer  请求参数是否序列化
+ *  @param isResponseSerializer 响应参数是否序列化
+ */
+- (void)uploadImgaeToServiceByPostWithURL:(NSString *)url
+                               parameters:(NSDictionary *)parameters
+                                   images:(NSArray *)images
+                           directoryNames:(NSArray *)directoryNames
+                                fileNames:(NSArray *)fileNames
                                  progress:(NetworkUploadProgress)progress
                                   success:(NetworkSuccess)success
                                   failure:(NetworkFailure)failure
@@ -228,24 +332,23 @@ fprintf(stderr, "-------------------\n");   \
         {
             for (NSInteger i = 0 ;i < images.count; i ++)
             {
-                // 生成一个唯一的图片名称
-                NSString *imgName = [NSString stringWithFormat:@"%ld",(long)[[NSDate date] timeIntervalSince1970]];
-                
-                DLog(@"fileName:  %@", [NSString stringWithFormat:@"fileName_%@_%ld.png",imgName,(long)i]);
+                /// 图片名称、图片所在文件夹名称（与服务上保持一致）
+                NSString *fileName  = fileNames[i]; // 图片所在文件夹名称
+                NSString *name = directoryNames[i]; // 图片名称
                 
                 NSData *imageData = UIImagePNGRepresentation(images[i]);
-                [formData appendPartWithFileData:imageData name:[NSString stringWithFormat:@"imgUrl"] fileName:[NSString stringWithFormat:@"fileName_%@_%ld.png",imgName,(long)i] mimeType:@"image/png"];
+                [formData appendPartWithFileData:imageData name:name fileName:fileName mimeType:@"image/png"];
             }
         }
     } progress:^(NSProgress * _Nonnull uploadProgress) {
-//        DLog(@"上传进度:%@", uploadProgress);
+        //        DLog(@"上传进度:%@", uploadProgress);
         progress(uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         DLog(@"请求结束，请求方式为：POST");
         DLog(@"responseObject:  %@", responseObject);
         
         success(responseObject);
-                
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         DLog(@"请求结果失败 原因:%@", error.localizedDescription);
         DLog(@"请求结束，请求方式为：POST");
