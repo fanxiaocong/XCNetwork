@@ -35,7 +35,7 @@ typedef void(^NetworkSuccess)(id result);
  *
  *  @param reason 原因。
  */
-typedef void(^NetworkFailure)(id reason);
+typedef void(^NetworkFailure)(id result, NSError * _Nonnull error);
 
 /**
  *  网络上传进度

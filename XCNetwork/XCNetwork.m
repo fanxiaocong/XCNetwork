@@ -14,8 +14,6 @@
 
 
 #import "XCNetwork.h"
-#import "XCNetworkStatus.h"
-
 
 
 #if DEBUG
@@ -59,11 +57,6 @@ fprintf(stderr, "-------------------\n");   \
 {
     DLog(@"设置请求配置开始。");
     
-    if (![[XCNetworkStatus shareInstance] haveNetwork]) {
-        
-        return NO;
-    }
-    
     self.manager = [AFHTTPSessionManager manager];
     self.manager.responseSerializer.acceptableContentTypes = [self.manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     
@@ -102,17 +95,7 @@ fprintf(stderr, "-------------------\n");   \
 {
     DLog(@"请求开始，请求方式为 *********************** ：POST");
     
-    BOOL b = [self configureRequest:isRequestSerializer responseSerializer:isResponseSerializer];
-    
-    if (!b)
-    {
-        // 请检查您的网络设置 , 网络断开
-        failure(FAIL_MESSAGE_OF_NETWORK_ERROR);
-        
-        DLog(@"请求结束，请求方式为 ***********************：POST");
-        
-        return ;
-    }
+    [self configureRequest:isRequestSerializer responseSerializer:isResponseSerializer];
     
     DLog(@"请求地址：%@", url);
     
@@ -130,7 +113,7 @@ fprintf(stderr, "-------------------\n");   \
         DLog(@"请求结果失败 原因:%@", error.localizedDescription);
         DLog(@"请求结束，请求方式为：POST");
         
-        failure(FAIL_MESSAGE_OF_REQUEST_FAIL);
+        failure(task, error);
     }];
 }
 
@@ -154,16 +137,7 @@ fprintf(stderr, "-------------------\n");   \
 {
     DLog(@"请求开始，请求方式为 *********************** ：GET");
     
-    BOOL b = [self configureRequest:isRequestSerializer responseSerializer:isResponseSerializer];
-    
-    if (!b) {
-        // 请检查您的网络设置 , 网络断开
-        failure(FAIL_MESSAGE_OF_NETWORK_ERROR);
-        
-        DLog(@"请求结束，请求方式为 *********************** ：GET");
-        
-        return ;
-    }
+    [self configureRequest:isRequestSerializer responseSerializer:isResponseSerializer];
     
     DLog(@"请求地址：%@", url);
     
@@ -181,7 +155,7 @@ fprintf(stderr, "-------------------\n");   \
         DLog(@"请求结果失败 原因:%@", error.localizedDescription);
         DLog(@"请求结束，请求方式为：GET");
         
-        failure(FAIL_MESSAGE_OF_REQUEST_FAIL);
+        failure(task, error);
     }];
     
     DLog(@"GET请求结束");
@@ -212,19 +186,10 @@ fprintf(stderr, "-------------------\n");   \
                        responseSerializer:(BOOL)isResponseSerializer
 {
     DLog(@"请求开始...上传图片，请求方式为：POST");
-    BOOL b = [self configureRequest:isRequestSerializer responseSerializer:isResponseSerializer];
-    if (!b) {
-        
-        DLog(@"请求结束，请求方式为：POST");
-        
-        failure(FAIL_MESSAGE_OF_NETWORK_ERROR);
-        
-        return;
-    }
+    [self configureRequest:isRequestSerializer responseSerializer:isResponseSerializer];
     
     DLog(@"请求地址：%@", url);
     DLog(@"请求参数：%@", parameters);
-    
     
     /// 服务器上存储图片的文件夹的名称
     NSMutableArray *directoryNames = [NSMutableArray array];
@@ -314,15 +279,7 @@ fprintf(stderr, "-------------------\n");   \
                        responseSerializer:(BOOL)isResponseSerializer
 {
     DLog(@"请求开始...上传图片，请求方式为：POST");
-    BOOL b = [self configureRequest:isRequestSerializer responseSerializer:isResponseSerializer];
-    if (!b) {
-        
-        DLog(@"请求结束，请求方式为：POST");
-        
-        failure(FAIL_MESSAGE_OF_NETWORK_ERROR);
-        
-        return;
-    }
+    [self configureRequest:isRequestSerializer responseSerializer:isResponseSerializer];
     
     DLog(@"请求地址：%@", url);
     DLog(@"请求参数：%@", parameters);
@@ -353,7 +310,7 @@ fprintf(stderr, "-------------------\n");   \
         DLog(@"请求结果失败 原因:%@", error.localizedDescription);
         DLog(@"请求结束，请求方式为：POST");
         
-        failure(FAIL_MESSAGE_OF_REQUEST_FAIL);
+        failure(task, error);
     }];
     DLog(@"请求结束 ...上传图片，请求方式为：POST");
 }
@@ -384,14 +341,6 @@ fprintf(stderr, "-------------------\n");   \
     
     //默认配置
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    
-    if (![[XCNetworkStatus shareInstance] haveNetwork])
-    {
-        failure(FAIL_MESSAGE_OF_NETWORK_ERROR);
-        
-        DLog(@"没有网络");
-        return ;
-    }
     
     self.downloadManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
@@ -429,7 +378,7 @@ fprintf(stderr, "-------------------\n");   \
         else
         {
             // 下载失败
-            failure(error);
+            failure(response, error);
         }
     }];
     

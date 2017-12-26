@@ -15,9 +15,7 @@
 		1E0BED9F1F73CBEB00D3B5FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0BED9D1F73CBEB00D3B5FB /* LaunchScreen.storyboard */; };
 		1E0BEDAA1F73CBEB00D3B5FB /* XCNetworkExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0BEDA91F73CBEB00D3B5FB /* XCNetworkExampleTests.m */; };
 		1E0BEDB51F73CBEB00D3B5FB /* XCNetworkExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0BEDB41F73CBEB00D3B5FB /* XCNetworkExampleUITests.m */; };
-		1E0BEDC91F73CC0B00D3B5FB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0BEDC41F73CC0B00D3B5FB /* Reachability.m */; };
 		1E0BEDCA1F73CC0B00D3B5FB /* XCNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0BEDC61F73CC0B00D3B5FB /* XCNetwork.m */; };
-		1E0BEDCB1F73CC0B00D3B5FB /* XCNetworkStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0BEDC81F73CC0B00D3B5FB /* XCNetworkStatus.m */; };
 		52764E838F7823A8F5FE7DCF /* libPods-XCNetworkExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42385017B56BEFDC9F37B241 /* libPods-XCNetworkExample.a */; };
 /* End PBXBuildFile section */
 
@@ -55,12 +53,8 @@
 		1E0BEDB01F73CBEB00D3B5FB /* XCNetworkExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCNetworkExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E0BEDB41F73CBEB00D3B5FB /* XCNetworkExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCNetworkExampleUITests.m; sourceTree = "<group>"; };
 		1E0BEDB61F73CBEB00D3B5FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1E0BEDC31F73CC0B00D3B5FB /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		1E0BEDC41F73CC0B00D3B5FB /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		1E0BEDC51F73CC0B00D3B5FB /* XCNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCNetwork.h; sourceTree = "<group>"; };
 		1E0BEDC61F73CC0B00D3B5FB /* XCNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCNetwork.m; sourceTree = "<group>"; };
-		1E0BEDC71F73CC0B00D3B5FB /* XCNetworkStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCNetworkStatus.h; sourceTree = "<group>"; };
-		1E0BEDC81F73CC0B00D3B5FB /* XCNetworkStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCNetworkStatus.m; sourceTree = "<group>"; };
 		42385017B56BEFDC9F37B241 /* libPods-XCNetworkExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-XCNetworkExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF3C87D26968315985FEF73 /* Pods-XCNetworkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCNetworkExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XCNetworkExample/Pods-XCNetworkExample.debug.xcconfig"; sourceTree = "<group>"; };
 		D3CC5E2418F2FAC143CF53C8 /* Pods-XCNetworkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCNetworkExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-XCNetworkExample/Pods-XCNetworkExample.release.xcconfig"; sourceTree = "<group>"; };
@@ -160,12 +154,8 @@
 		1E0BEDC21F73CC0B00D3B5FB /* XCNetwork */ = {
 			isa = PBXGroup;
 			children = (
-				1E0BEDC31F73CC0B00D3B5FB /* Reachability.h */,
-				1E0BEDC41F73CC0B00D3B5FB /* Reachability.m */,
 				1E0BEDC51F73CC0B00D3B5FB /* XCNetwork.h */,
 				1E0BEDC61F73CC0B00D3B5FB /* XCNetwork.m */,
-				1E0BEDC71F73CC0B00D3B5FB /* XCNetworkStatus.h */,
-				1E0BEDC81F73CC0B00D3B5FB /* XCNetworkStatus.m */,
 			);
 			path = XCNetwork;
 			sourceTree = "<group>";
@@ -377,8 +367,6 @@
 				1E0BED971F73CBEB00D3B5FB /* ViewController.m in Sources */,
 				1E0BED941F73CBEB00D3B5FB /* AppDelegate.m in Sources */,
 				1E0BEDCA1F73CC0B00D3B5FB /* XCNetwork.m in Sources */,
-				1E0BEDCB1F73CC0B00D3B5FB /* XCNetworkStatus.m in Sources */,
-				1E0BEDC91F73CC0B00D3B5FB /* Reachability.m in Sources */,
 				1E0BED911F73CBEB00D3B5FB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
