@@ -101,9 +101,7 @@ fprintf(stderr, "-------------------\n");   \
     
     DLog(@"请求参数：%@", parameters);
     
-    [self.manager POST:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [self.manager POST:url parameters:parameters headers:nil progress:^(NSProgress * _Nonnull uploadProgress) {} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         DLog(@"responseObject:  %@", responseObject);
                 
@@ -115,6 +113,7 @@ fprintf(stderr, "-------------------\n");   \
         
         failure(task, error);
     }];
+    
 }
 
 
@@ -143,9 +142,7 @@ fprintf(stderr, "-------------------\n");   \
     
     DLog(@"请求参数：%@", parameters);
     
-    [self.manager GET:url parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [self.manager GET:url parameters:parameters headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         DLog(@"responseObject:  %@", responseObject);
         
@@ -284,7 +281,7 @@ fprintf(stderr, "-------------------\n");   \
     DLog(@"请求地址：%@", url);
     DLog(@"请求参数：%@", parameters);
     
-    [self.manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [self.manager POST:url parameters:parameters headers:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         if (images)
         {
             for (NSInteger i = 0 ;i < images.count; i ++)

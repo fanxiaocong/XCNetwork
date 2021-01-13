@@ -33,9 +33,9 @@ typedef void(^NetworkSuccess)(id result);
 /**
  *  @brief  网络操作失败的block处理。
  *
- *  @param reason 原因。
+ *  @param error 原因。
  */
-typedef void(^NetworkFailure)(id result, NSError * _Nonnull error);
+typedef void(^NetworkFailure)(id result, NSError * error);
 
 /**
  *  网络上传进度
